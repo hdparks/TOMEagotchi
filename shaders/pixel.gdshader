@@ -45,18 +45,22 @@ void vertex(){
     model_view_matrix = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
 }
 
+uniform int amount = 400;
+
 void fragment() {
 	vec2 e = vec2(1./VIEWPORT_SIZE.xy);
+
+	vec2 grid_uv = round(SCREEN_UV * float(amount)) / float(amount);
 
 //	Shadows
 	float depth_diff = 0.0;
 	float neg_depth_diff = .5;
 	if (shadows_enabled) {
-		float depth = getDepth(SCREEN_UV, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
-		float du = getDepth(SCREEN_UV+vec2(0., -1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
-		float dr = getDepth(SCREEN_UV+vec2(1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
-		float dd = getDepth(SCREEN_UV+vec2(0., 1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
-		float dl = getDepth(SCREEN_UV+vec2(-1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float depth = getDepth(grid_uv, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float du = getDepth(grid_uv+vec2(0., -1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dr = getDepth(grid_uv+vec2(1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dd = getDepth(grid_uv+vec2(0., 1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dl = getDepth(grid_uv+vec2(-1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
 		depth_diff += clamp(du - depth, 0., 1.);
 		depth_diff += clamp(dd - depth, 0., 1.);
 		depth_diff += clamp(dr - depth, 0., 1.);
@@ -74,11 +78,11 @@ void fragment() {
 //	Highlights
 	float normal_diff = 0.;
 	if (highlights_enabled) {
-		vec3 normal = texture(NORMAL_TEXTURE, SCREEN_UV).rgb * 2.0 - 1.0;
-		vec3 nu = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
-		vec3 nr = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
-		vec3 nd = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
-		vec3 nl = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 normal = texture(NORMAL_TEXTURE, grid_uv).rgb * 2.0 - 1.0;
+		vec3 nu = texture(NORMAL_TEXTURE, grid_uv+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
+		vec3 nr = texture(NORMAL_TEXTURE, grid_uv+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 nd = texture(NORMAL_TEXTURE, grid_uv+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
+		vec3 nl = texture(NORMAL_TEXTURE, grid_uv+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
 		vec3 normal_edge_bias = (vec3(1., 1., 1.));
 		normal_diff += normalIndicator(normal_edge_bias, normal, nu, depth_diff);
 		normal_diff += normalIndicator(normal_edge_bias, normal, nr, depth_diff);
@@ -90,7 +94,7 @@ void fragment() {
 	}
 
 
-	vec3 original_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	vec3 original_color = texture(SCREEN_TEXTURE, grid_uv).rgb;
 	vec3 final_highlight_color = mix(original_color, highlight_color, highlight_strength);
 	vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
 	vec3 final = original_color;

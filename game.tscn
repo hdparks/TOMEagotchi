@@ -1,8 +1,8 @@
-[gd_scene load_steps=27 format=4 uid="uid://4ntsm701ks7d"]
+[gd_scene load_steps=37 format=4 uid="uid://4ntsm701ks7d"]
 
 [ext_resource type="Script" uid="uid://da6dsqh3rhpdh" path="res://scripts/game.gd" id="1_iotsf"]
-[ext_resource type="Shader" uid="uid://dtq12e2ak6xht" path="res://hexel.gdshader" id="2_e2o6t"]
-[ext_resource type="Shader" uid="uid://dsw2pqli7j2ra" path="res://pixel.gdshader" id="2_feb5d"]
+[ext_resource type="Shader" uid="uid://dtq12e2ak6xht" path="res://shaders/hexel.gdshader" id="2_e2o6t"]
+[ext_resource type="Shader" uid="uid://dsw2pqli7j2ra" path="res://shaders/pixel.gdshader" id="2_feb5d"]
 [ext_resource type="Texture2D" uid="uid://bg1g5roholeet" path="res://status-full.png" id="3_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://dtbvn3k33s233" path="res://status-empty.png" id="4_7jktm"]
 [ext_resource type="Script" uid="uid://ci6eaulvx4tds" path="res://scripts/discipline-status-toggle.gd" id="4_mfdv2"]
@@ -15,6 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://b13kcy4h4gt3n" path="res://discipline.png" id="8_hve3p"]
 [ext_resource type="Texture2D" uid="uid://d3p5gmfsalkmm" path="res://cast-spell.png" id="9_hve3p"]
 [ext_resource type="Texture2D" uid="uid://bfkppnpiooes1" path="res://clean.png" id="10_mfdv2"]
+[ext_resource type="AudioStream" uid="uid://n3tjgwutbyuy" path="res://sounds/omnomnom.ogg" id="11_e36ub"]
+[ext_resource type="Script" uid="uid://ptoefrid6gj7" path="res://scripts/feed_meal_button_audio_player.gd" id="12_vaj68"]
+[ext_resource type="AudioStream" uid="uid://1lpjj3o7brpa" path="res://sounds/drink.ogg" id="13_hb5m1"]
+[ext_resource type="Script" uid="uid://c0m7nlmn2lfys" path="res://scripts/feed_potion_button_audio_player.gd" id="15_i2p71"]
+[ext_resource type="AudioStream" uid="uid://emhsxhe517hf" path="res://sounds/scold.ogg" id="16_x5p1p"]
+[ext_resource type="AudioStream" uid="uid://47jyy7sjp1ju" path="res://sounds/spellsound.ogg" id="18_qhcbd"]
+[ext_resource type="Script" uid="uid://djvwymfgy5hrk" path="res://scripts/discipline_button_audio_player.gd" id="19_xa8c5"]
+[ext_resource type="AudioStream" uid="uid://bbkw05vnngjlh" path="res://sounds/errsound.ogg" id="20_f1jbl"]
+[ext_resource type="Script" uid="uid://c0q2ekw8p4uy5" path="res://scripts/cast_spell_button_audio_player.gd" id="22_5b14r"]
+[ext_resource type="Script" uid="uid://br2lbmsmqxoa" path="res://scripts/clean_button_audio_player.gd" id="25_bnpwn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nq0dy"]
 
@@ -166,7 +176,7 @@ _data = {
 &"Idle": SubResource("Animation_0as2c")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_80nbo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vaj68"]
 render_priority = 0
 shader = ExtResource("2_feb5d")
 shader_parameter/shadows_enabled = true
@@ -175,6 +185,7 @@ shader_parameter/shadow_strength = 0.4
 shader_parameter/highlight_strength = 0.1
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/amount = 1024
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_iotsf")
@@ -286,231 +297,277 @@ autoplay = "Idle"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_80nbo")
+material = SubResource("ShaderMaterial_vaj68")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -0.00249699
+offset_top = 0.000413544
+offset_right = -0.00250244
+offset_bottom = 0.000427246
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.999889, 0.999889)
 color = Color(0.572549, 0.709804, 0.658824, 0.407843)
+metadata/_edit_use_anchors_ = true
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
 [node name="Happy" type="RichTextLabel" parent="UI Layer"]
-offset_top = 6.0
-offset_right = 59.0
-offset_bottom = 29.0
-scale = Vector2(0.534606, 0.554697)
+offset_top = 3.0
+offset_right = 72.0
+offset_bottom = 26.0
+scale = Vector2(1.05372, 1.09332)
+pivot_offset = Vector2(0.00467117, -3.58994)
 text = "Happy"
 
 [node name="Happy1" type="Sprite2D" parent="UI Layer"]
-position = Vector2(52.5537, 13.8752)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(-3.8147e-06, -9.53674e-07)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("3_fc0e3")
+offset = Vector2(97.8523, 17.7227)
 script = ExtResource("5_lc2xo")
 threshold = 1
 
 [node name="Happy2" type="Sprite2D" parent="UI Layer"]
-position = Vector2(69.5537, 13.8751)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(0, 9.53674e-07)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(129.507, 17.7226)
 script = ExtResource("5_lc2xo")
 threshold = 2
 
 [node name="Happy3" type="Sprite2D" parent="UI Layer"]
-position = Vector2(86.5537, 13.8751)
-scale = Vector2(0.534606, 0.554696)
+position = Vector2(-7.62939e-06, 0)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(161.162, 17.7226)
 script = ExtResource("5_lc2xo")
 threshold = 3
 
 [node name="Happy4" type="Sprite2D" parent="UI Layer"]
-position = Vector2(103.554, 13.8751)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(7.62939e-06, 9.53674e-07)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(192.817, 17.7226)
 script = ExtResource("5_lc2xo")
 threshold = 4
 
 [node name="Hungry" type="RichTextLabel" parent="UI Layer"]
-offset_top = 39.0
-offset_right = 66.0
-offset_bottom = 62.0
-scale = Vector2(0.534606, 0.554697)
+offset_left = -0.00249696
+offset_top = 36.9027
+offset_right = 65.9975
+offset_bottom = 59.9027
+scale = Vector2(1.05372, 1.09332)
+pivot_offset = Vector2(0.00467117, -37.6873)
 text = "Hungry
 "
 
 [node name="Hungry1" type="Sprite2D" parent="UI Layer"]
-position = Vector2(52.5537, 45.8751)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(-3.8147e-06, -1.90735e-06)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("3_fc0e3")
+offset = Vector2(97.8523, 50.0253)
 script = ExtResource("7_7sc4i")
 threshold = 1
 
 [node name="Hungry2" type="Sprite2D" parent="UI Layer"]
-position = Vector2(69.5537, 45.8751)
-scale = Vector2(0.534606, 0.554697)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(129.507, 50.0252)
 script = ExtResource("7_7sc4i")
 threshold = 2
 
 [node name="Hungry3" type="Sprite2D" parent="UI Layer"]
-position = Vector2(86.5537, 45.8751)
-scale = Vector2(0.534606, 0.554696)
+position = Vector2(7.62939e-06, 0)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(161.162, 50.0254)
 script = ExtResource("7_7sc4i")
 threshold = 3
 
 [node name="Hungry4" type="Sprite2D" parent="UI Layer"]
-position = Vector2(103.554, 45.8751)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(7.62939e-06, 1.90735e-06)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(192.817, 50.0253)
 script = ExtResource("7_7sc4i")
 threshold = 4
 
 [node name="Mana" type="RichTextLabel" parent="UI Layer"]
-offset_top = 70.0
-offset_right = 61.0
-offset_bottom = 93.0
-scale = Vector2(0.534606, 0.554697)
+offset_left = -0.00249696
+offset_top = 69.8236
+offset_right = 60.9975
+offset_bottom = 92.8236
+scale = Vector2(1.05372, 1.09332)
+pivot_offset = Vector2(0.00467117, -68.1954)
 text = "Mana"
 
 [node name="Mana1" type="Sprite2D" parent="UI Layer"]
-position = Vector2(52.5537, 77.8751)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(-3.8147e-06, 0)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("3_fc0e3")
+offset = Vector2(97.8523, 82.328)
 script = ExtResource("8_80cx4")
 threshold = 1
 
 [node name="Mana2" type="Sprite2D" parent="UI Layer"]
-position = Vector2(69.5537, 77.8752)
-scale = Vector2(0.534606, 0.554697)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(129.507, 82.3281)
 script = ExtResource("8_80cx4")
 threshold = 2
 
 [node name="Mana3" type="Sprite2D" parent="UI Layer"]
-position = Vector2(86.5537, 77.8752)
-scale = Vector2(0.534606, 0.554696)
+position = Vector2(7.62939e-06, 0)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(161.162, 82.3284)
 script = ExtResource("8_80cx4")
 threshold = 3
 
 [node name="Mana4" type="Sprite2D" parent="UI Layer"]
-position = Vector2(103.554, 77.8752)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(7.62939e-06, 0)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(192.817, 82.3281)
 script = ExtResource("8_80cx4")
 threshold = 4
 
 [node name="Discipline" type="RichTextLabel" parent="UI Layer"]
-offset_left = -1.0
-offset_top = 105.0
-offset_right = 88.0
-offset_bottom = 128.0
-scale = Vector2(0.534606, 0.554697)
+offset_left = -0.997843
+offset_top = 101.726
+offset_right = 88.0022
+offset_bottom = 124.726
+scale = Vector2(1.05372, 1.09332)
+pivot_offset = Vector2(1.86671, -105.882)
 text = "Discipline
 "
 
 [node name="Discipline1" type="Sprite2D" parent="UI Layer"]
-position = Vector2(52.5537, 109.875)
-scale = Vector2(0.534606, 0.554697)
+position = Vector2(-3.8147e-06, -3.8147e-06)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("3_fc0e3")
+offset = Vector2(97.8523, 114.631)
 script = ExtResource("4_mfdv2")
 threshold = 1
 
-[node name="Discipline2" type="Sprite2D" parent="UI Layer"]
-position = Vector2(69.5537, 109.875)
-scale = Vector2(0.534606, 0.554697)
+[node name="Discipline4" type="Sprite2D" parent="UI Layer"]
+position = Vector2(7.62939e-06, 3.8147e-06)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(192.817, 114.63)
+script = ExtResource("4_mfdv2")
+threshold = 4
+
+[node name="Discipline2" type="Sprite2D" parent="UI Layer"]
+scale = Vector2(1.05372, 1.09332)
+texture = ExtResource("4_7jktm")
+offset = Vector2(129.507, 114.63)
 script = ExtResource("4_mfdv2")
 threshold = 2
 
 [node name="Discipline3" type="Sprite2D" parent="UI Layer"]
-position = Vector2(86.5537, 109.875)
-scale = Vector2(0.534606, 0.554696)
+position = Vector2(-7.62939e-06, -3.8147e-06)
+scale = Vector2(1.05372, 1.09332)
 texture = ExtResource("4_7jktm")
+offset = Vector2(161.162, 114.631)
 script = ExtResource("4_mfdv2")
 threshold = 3
 
-[node name="Discipline4" type="Sprite2D" parent="UI Layer"]
-position = Vector2(103.554, 109.875)
-scale = Vector2(0.534606, 0.554697)
-texture = ExtResource("4_7jktm")
-script = ExtResource("4_mfdv2")
-threshold = 4
-
-[node name="Light" type="RichTextLabel" parent="UI Layer"]
-offset_left = 2.0
-offset_top = 128.0
-offset_right = 63.0
-offset_bottom = 151.0
-scale = Vector2(0.534606, 0.554697)
-text = "Light
-"
-
 [node name="Feed Meal Button" type="Button" parent="UI Layer"]
-offset_left = 177.0
-offset_top = 25.0
-offset_right = 208.0
-offset_bottom = 46.0
+offset_left = 5.96958
+offset_top = 191.107
+offset_right = 36.9696
+offset_bottom = 212.107
+scale = Vector2(1.97102, 1.97102)
+pivot_offset = Vector2(-5.97024, -191.128)
 
 [node name="Feed Meal" type="Sprite2D" parent="UI Layer/Feed Meal Button"]
 position = Vector2(15, 9)
 texture = ExtResource("5_7jktm")
 
+[node name="FeedMealButtonAudioPlayer" type="AudioStreamPlayer" parent="UI Layer/Feed Meal Button"]
+stream = ExtResource("11_e36ub")
+script = ExtResource("12_vaj68")
+
 [node name="Feed Potion Button" type="Button" parent="UI Layer"]
-offset_left = 211.0
-offset_top = 25.0
-offset_right = 242.0
-offset_bottom = 46.0
+offset_left = 39.8114
+offset_top = 191.107
+offset_right = 70.8114
+offset_bottom = 212.107
+scale = Vector2(1.97102, 1.97102)
+pivot_offset = Vector2(-39.8158, -191.128)
 
 [node name="Feed Potion" type="Sprite2D" parent="UI Layer/Feed Potion Button"]
 position = Vector2(17, 11)
 texture = ExtResource("6_j5wjh")
 
+[node name="FeedPotionButtonAudioPlayer" type="AudioStreamPlayer" parent="UI Layer/Feed Potion Button"]
+stream = ExtResource("13_hb5m1")
+script = ExtResource("15_i2p71")
+
 [node name="Toggle Lights" type="Sprite2D" parent="UI Layer"]
-position = Vector2(194, 64)
+position = Vector2(7.62939e-06, 0)
+scale = Vector2(1.97102, 1.97102)
 texture = ExtResource("7_vef74")
+offset = Vector2(88.5931, 201.083)
 
 [node name="Discipline Button" type="Button" parent="UI Layer"]
-offset_left = 211.0
-offset_top = 56.0
-offset_right = 242.0
-offset_bottom = 75.0
+offset_left = 74.6485
+offset_top = 219.972
+offset_right = 105.648
+offset_bottom = 248.972
+scale = Vector2(1.97102, 1.97102)
+pivot_offset = Vector2(-74.6568, -219.996)
 
 [node name="Discipline5" type="Sprite2D" parent="UI Layer/Discipline Button"]
-position = Vector2(16, 6)
+position = Vector2(16, 13)
 texture = ExtResource("8_hve3p")
 
+[node name="DisciplineButtonAudioPlayer" type="AudioStreamPlayer" parent="UI Layer/Discipline Button"]
+stream = ExtResource("16_x5p1p")
+script = ExtResource("19_xa8c5")
+
 [node name="Cast Spell Button" type="Button" parent="UI Layer"]
-offset_left = 177.0
-offset_top = 90.0
-offset_right = 208.0
-offset_bottom = 119.0
+offset_left = 5.96958
+offset_top = 219.972
+offset_right = 36.9696
+offset_bottom = 248.972
+scale = Vector2(1.97102, 1.97102)
+pivot_offset = Vector2(-5.97024, -219.996)
 
 [node name="Cast Spell" type="Sprite2D" parent="UI Layer/Cast Spell Button"]
 position = Vector2(15, 15)
 texture = ExtResource("9_hve3p")
 
+[node name="CastSpellButtonAudioPlayer" type="AudioStreamPlayer" parent="UI Layer/Cast Spell Button"]
+stream = ExtResource("18_qhcbd")
+script = ExtResource("22_5b14r")
+
 [node name="Clean Button" type="Button" parent="UI Layer"]
 anchors_preset = -1
 anchor_right = 0.031
 anchor_bottom = 0.039
-offset_left = 212.0
-offset_top = 90.0
-offset_right = 231.064
-offset_bottom = 113.384
+offset_left = 41.0
+offset_top = 220.0
+offset_right = 63.072
+offset_bottom = 229.032
+scale = Vector2(1.97102, 1.97102)
+pivot_offset = Vector2(-40.8112, -219.996)
 
 [node name="Clean" type="Sprite2D" parent="UI Layer/Clean Button"]
 position = Vector2(14, 16)
 texture = ExtResource("10_mfdv2")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="CleanButtonAudioPlayer" type="AudioStreamPlayer" parent="UI Layer/Clean Button"]
+stream = ExtResource("20_f1jbl")
+script = ExtResource("25_bnpwn")
 
 [connection signal="discipline_changed" from="." to="UI Layer/Discipline1" method="_on_discipline_changed"]
+[connection signal="discipline_changed" from="." to="UI Layer/Discipline4" method="_on_discipline_changed"]
 [connection signal="discipline_changed" from="." to="UI Layer/Discipline2" method="_on_discipline_changed"]
 [connection signal="discipline_changed" from="." to="UI Layer/Discipline3" method="_on_discipline_changed"]
-[connection signal="discipline_changed" from="." to="UI Layer/Discipline4" method="_on_discipline_changed"]
 [connection signal="happiness_changed" from="." to="UI Layer/Happy1" method="_on_happiness_changed"]
 [connection signal="happiness_changed" from="." to="UI Layer/Happy2" method="_on_happiness_changed"]
 [connection signal="happiness_changed" from="." to="UI Layer/Happy3" method="_on_happiness_changed"]
@@ -524,7 +581,12 @@ texture = ExtResource("10_mfdv2")
 [connection signal="mana_changed" from="." to="UI Layer/Mana3" method="_on_mana_changed"]
 [connection signal="mana_changed" from="." to="UI Layer/Mana4" method="_on_mana_changed"]
 [connection signal="pressed" from="UI Layer/Feed Meal Button" to="." method="incr_hunger"]
+[connection signal="pressed" from="UI Layer/Feed Meal Button" to="UI Layer/Feed Meal Button/FeedMealButtonAudioPlayer" method="_on_feed_meal_button_pressed"]
 [connection signal="pressed" from="UI Layer/Feed Potion Button" to="." method="incr_mana"]
+[connection signal="pressed" from="UI Layer/Feed Potion Button" to="UI Layer/Feed Potion Button/FeedPotionButtonAudioPlayer" method="_on_feed_potion_button_pressed"]
 [connection signal="pressed" from="UI Layer/Discipline Button" to="." method="incr_discipline"]
+[connection signal="pressed" from="UI Layer/Discipline Button" to="UI Layer/Discipline Button/DisciplineButtonAudioPlayer" method="_on_discipline_button_pressed"]
 [connection signal="pressed" from="UI Layer/Cast Spell Button" to="." method="incr_happiness"]
 [connection signal="pressed" from="UI Layer/Cast Spell Button" to="." method="decr_mana"]
+[connection signal="pressed" from="UI Layer/Cast Spell Button" to="UI Layer/Cast Spell Button/CastSpellButtonAudioPlayer" method="_on_cast_spell_button_pressed"]
+[connection signal="pressed" from="UI Layer/Clean Button" to="UI Layer/Clean Button/CleanButtonAudioPlayer" method="_on_clean_button_pressed"]
